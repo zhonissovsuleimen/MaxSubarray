@@ -30,15 +30,15 @@ fn main() {
 
     timer = Instant::now();
     result = brute_force(&nums);
-    println!("Brute Force \t\tcalculated {result} in {}ms", timer.elapsed().as_micros());
+    println!("Brute Force \t\tcalculated {result} in {} μs", timer.elapsed().as_micros());
 
     timer = Instant::now();
     result = divide_and_conquer(&nums, 0, nums.len() - 1 as usize);
-    println!("Divide and conquer \tcalculated {result} in {}ms", timer.elapsed().as_micros());
+    println!("Divide and conquer \tcalculated {result} in {} μs", timer.elapsed().as_micros());
 
     timer = Instant::now();
     result = kadane(&nums); 
-    println!("Kadane algorithm \tcalculated {result} in {}ms", timer.elapsed().as_micros());
+    println!("Kadane algorithm \tcalculated {result} in {} μs", timer.elapsed().as_micros());
 }
 
 fn brute_force(nums: &Vec<i32>) -> i32 {
