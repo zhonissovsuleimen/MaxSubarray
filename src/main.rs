@@ -3,6 +3,11 @@ use std::io::stdin;
 use std::time::Instant;
 
 fn main() {
+    const REPEATS: usize = 11;
+    let mut bf_log = [0.0;REPEATS];
+    let mut dc_log = [0.0;REPEATS];
+    let mut kd_log = [0.0;REPEATS];
+
     println!("Provide size of an array. Array will be populated by random numbers from -1000 to 1000 (inclusive)");    
     let length: u32;
     loop{
@@ -19,26 +24,40 @@ fn main() {
         }
     }
 
-    let mut nums = vec![];
-    for _ in 0..length {
-        let random = rand::thread_rng().gen_range(-1000..=1000);
-        nums.push(random);
+    println!("RUN - Brute Force - D&C - Kadane");
+    for i in 0..REPEATS{
+        let mut nums = vec![];
+        for _ in 0..length {
+            let random = rand::thread_rng().gen_range(-1000..=1000);
+            nums.push(random);
+        }
+
+        let mut timer;
+        let bf_result;
+        let dc_result;
+        let kd_result;
+        let mut row_string = format!("{}\t", i+1); 
+
+        timer = Instant::now();
+        bf_result = brute_force(&nums);
+        bf_log[i] = timer.elapsed().as_secs_f64() * 1_000_000.0; //micro sec
+        row_string.push_str(format!("{:.2}\t", bf_log[i]).as_str());
+
+        timer = Instant::now();
+        dc_result = divide_and_conquer(&nums, 0, nums.len() - 1 as usize);
+        dc_log[i] = timer.elapsed().as_secs_f64() * 1_000_000.0; //micro sec
+        row_string.push_str(format!("{:.2}\t", dc_log[i]).as_str());
+
+        timer = Instant::now();
+        kd_result = kadane(&nums); 
+        kd_log[i] = timer.elapsed().as_secs_f64() * 1_000_000.0; //micro sec 
+        row_string.push_str(format!("{:.2}\t", kd_log[i]).as_str());
+        println!("{}", row_string);
+
+        if !(bf_result == dc_result && bf_result == kd_result){
+            panic!();
+        }
     }
-
-    let mut timer;
-    let mut result; 
-
-    timer = Instant::now();
-    result = brute_force(&nums);
-    println!("Brute Force \t\tcalculated {result} in {} μs", timer.elapsed().as_micros());
-
-    timer = Instant::now();
-    result = divide_and_conquer(&nums, 0, nums.len() - 1 as usize);
-    println!("Divide and conquer \tcalculated {result} in {} μs", timer.elapsed().as_micros());
-
-    timer = Instant::now();
-    result = kadane(&nums); 
-    println!("Kadane algorithm \tcalculated {result} in {} μs", timer.elapsed().as_micros());
 }
 
 fn brute_force(nums: &Vec<i32>) -> i32 {
