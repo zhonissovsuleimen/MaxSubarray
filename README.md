@@ -1,4 +1,4 @@
-# MaxSubarray
+# About
 This is Assignment 1 for Algorithms &amp; Computing Theory course.
 
 The purpose of the project is to implement three algorithms for Max Subarray problem, as well as measure the performance and analyse time complexity.
