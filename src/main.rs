@@ -3,7 +3,7 @@ use std::io::stdin;
 use std::time::Instant;
 
 fn main() {
-    println!("Input size of an array. Array will be populated by random number from -1000 to 1000 inclusive");    
+    println!("Provide size of an array. Array will be populated by random number from -1000 to 1000 inclusive");    
     let length: u32;
     loop{
         let mut input_str = String::new();
@@ -49,14 +49,10 @@ fn main() {
 fn brute_force(nums: &Vec<i32>) -> i32 {
     let mut max_sum = i32::MIN;
     for i in 0..nums.len() {
-        let mut local_sum = nums[i];
-        for j in (i + 1)..nums.len() {
+        let mut local_sum = 0;
+        for j in i..nums.len() {
             local_sum += nums[j];
-            max_sum = if local_sum > max_sum {
-                local_sum
-            } else {
-                max_sum
-            };
+            max_sum = if local_sum > max_sum { local_sum } else { max_sum };
         }
     }
 
