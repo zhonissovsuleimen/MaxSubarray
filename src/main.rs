@@ -3,7 +3,7 @@ use std::io::stdin;
 use std::time::Instant;
 
 fn main() {
-    println!("Provide size of an array. Array will be populated by random number from -1000 to 1000 inclusive");    
+    println!("Provide size of an array. Array will be populated by random numbers from -1000 to 1000 (inclusive)");    
     let length: u32;
     loop{
         let mut input_str = String::new();
@@ -25,25 +25,20 @@ fn main() {
         nums.push(random);
     }
 
-    let start = Instant::now();
-    let bf_result = brute_force(&nums);
-    println!(
-        "RESULT: {bf_result}; TIME_IN_MICROS: {}",
-        start.elapsed().as_micros()
-    );
+    let mut timer;
+    let mut result; 
 
-    let start = Instant::now();
-    let dac_result = divide_and_conquer(&nums, 0, nums.len() - 1 as usize);
-    println!(
-        "RESULT: {dac_result}; TIME_IN_MICROS: {}",
-        start.elapsed().as_micros()
-    );
+    timer = Instant::now();
+    result = brute_force(&nums);
+    println!("Brute Force \t\tcalculated {result} in {}ms", timer.elapsed().as_micros());
 
-    let start = Instant::now();
-    let kadane_result = kadane(&nums); 
-    println!(
-        "RESULT: {kadane_result}; TIME_IN_MICROS: {}", start.elapsed().as_micros()
-    );
+    timer = Instant::now();
+    result = divide_and_conquer(&nums, 0, nums.len() - 1 as usize);
+    println!("Divide and conquer \tcalculated {result} in {}ms", timer.elapsed().as_micros());
+
+    timer = Instant::now();
+    result = kadane(&nums); 
+    println!("Kadane algorithm \tcalculated {result} in {}ms", timer.elapsed().as_micros());
 }
 
 fn brute_force(nums: &Vec<i32>) -> i32 {
