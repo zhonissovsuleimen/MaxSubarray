@@ -3,6 +3,7 @@ use std::io::stdin;
 use std::time::Instant;
 
 fn main() {
+    // Getting user input
     println!("Provide size of an array. Array will be populated by random numbers from -1000 to 1000 (inclusive)");    
     let length: u32;
     loop{
@@ -19,12 +20,14 @@ fn main() {
         }
     }
 
+    // Populating array with random numbers from -1000 to 1000 inclusive
     let mut nums = vec![];
     for _ in 0..length {
         let random = rand::thread_rng().gen_range(-1000..=1000);
         nums.push(random);
     }
 
+    // Getting results
     let mut timer;
     let mut result; 
 
