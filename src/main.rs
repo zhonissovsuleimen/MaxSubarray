@@ -1,11 +1,27 @@
 use rand::prelude::*;
+use std::io::stdin;
 use std::time::Instant;
 
 fn main() {
+    println!("Input size of an array. Array will be populated by random number from -1000 to 1000 inclusive");    
+    let length: u32;
+    loop{
+        let mut input_str = String::new();
+        stdin().read_line(&mut input_str).expect("Error reading console input");
+        match input_str.trim().parse::<u32>(){
+            Ok(input) => {
+                length = input; 
+                break;
+            }
+            Err(_) =>{
+                println!("Input is incorrect. Please provide unassigned 32 bit integer.");
+            }
+        }
+    }
+
     let mut nums = vec![];
-    const LENGTH: u32 = 20000;
-    for _ in 0..LENGTH {
-        let random = rand::thread_rng().gen_range(-1000..1000);
+    for _ in 0..length {
+        let random = rand::thread_rng().gen_range(-1000..=1000);
         nums.push(random);
     }
 
